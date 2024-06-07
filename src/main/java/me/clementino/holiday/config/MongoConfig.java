@@ -1,10 +1,10 @@
-package me.clementino.api_holiday.config;
+package me.clementino.holiday.config;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Optional;
-import me.clementino.api_holiday.util.MongoOffsetDateTimeReader;
-import me.clementino.api_holiday.util.MongoOffsetDateTimeWriter;
+import me.clementino.holiday.util.MongoOffsetDateTimeReader;
+import me.clementino.holiday.util.MongoOffsetDateTimeWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.auditing.DateTimeProvider;
@@ -18,7 +18,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 
 @Configuration
-@EnableMongoRepositories("me.clementino.api_holiday.repos")
+@EnableMongoRepositories("me.clementino.holiday.repos")
 @EnableMongoAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
 public class MongoConfig {
 

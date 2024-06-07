@@ -1,4 +1,4 @@
-package me.clementino.api_holiday.util;
+package me.clementino.holiday.util;
 
 import java.time.OffsetDateTime;
 import java.util.Date;

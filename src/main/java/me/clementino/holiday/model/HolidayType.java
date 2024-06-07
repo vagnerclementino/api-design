@@ -1,4 +1,4 @@
-package me.clementino.api_holiday.model;
+package me.clementino.holiday.model;
 
 
 public enum HolidayType {

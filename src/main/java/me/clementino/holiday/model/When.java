@@ -1,4 +1,4 @@
-package me.clementino.api_holiday.model;
+package me.clementino.holiday.model;
 
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;

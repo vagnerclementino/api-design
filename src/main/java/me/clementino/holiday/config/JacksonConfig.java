@@ -1,4 +1,4 @@
-package me.clementino.api_holiday.config;
+package me.clementino.holiday.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;

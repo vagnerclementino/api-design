@@ -1,7 +1,7 @@
-package me.clementino.api_holiday.util;
+package me.clementino.holiday.util;
 
-import static me.clementino.api_holiday.util.MongoOffsetDateTimeWriter.DATE_FIELD;
-import static me.clementino.api_holiday.util.MongoOffsetDateTimeWriter.OFFSET_FIELD;
+import static me.clementino.holiday.util.MongoOffsetDateTimeWriter.DATE_FIELD;
+import static me.clementino.holiday.util.MongoOffsetDateTimeWriter.OFFSET_FIELD;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;

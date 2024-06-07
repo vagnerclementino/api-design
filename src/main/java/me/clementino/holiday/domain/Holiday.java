@@ -1,4 +1,4 @@
-package me.clementino.api_holiday.domain;
+package me.clementino.holiday.domain;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import me.clementino.api_holiday.model.HolidayType;
-import me.clementino.api_holiday.model.When;
+import me.clementino.holiday.model.HolidayType;
+import me.clementino.holiday.model.When;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
