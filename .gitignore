@@ -44,3 +44,4 @@ replay_pid*
 .idea/
 
 .gitconfig
+.aider*
