@@ -1,12 +1,18 @@
 spring:
-  data:
-    mongodb:
-      uri: ${MONGODB_DATABASE_URL:mongodb://localhost:27017/api-holiday}
-      uuid-representation: standard
-      auto-index-creation: true
+  cloud:
+    function:
+      definition: holidayFunction
+  main:
+    web-application-type: none
   docker:
     compose:
       lifecycle-management: start-only
+
+aws:
+  endpoint: http://localhost:4566
+  region: us-east-1
+  dynamodb:
+    table-name: holidays
 error:
   handling:
     http-status-in-json-response: true

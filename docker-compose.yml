@@ -1,17 +1,18 @@
 services:
-  mongodb:
-    image: mongo:7.0.9
-    environment:
-    - MONGO_INITDB_DATABASE=api-holiday
-    command:
-    - --replSet
-    - rs0
-    - --bind_ip_all
+  localstack:
+    image: localstack/localstack:3.4
+    container_name: localstack
     ports:
-    - 27018:27017
-    healthcheck:
-      test: test $$(mongosh --quiet --eval "try {rs.initiate({_id:'rs0',members:[{_id:0,host:\"mongodb:27017\"}]})}
-        catch(e) {rs.status().ok}") -eq 1
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=dynamodb,apigateway,lambda
+      - DEFAULT_REGION=us-east-1
+      - LAMBDA_DOCKER_NETWORK=localstack_default
+      - LAMBDA_REMOTE_DOCKER=true
+      - LAMBDA_EXECUTOR=docker-reuse
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
