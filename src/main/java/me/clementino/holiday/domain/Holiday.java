@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import me.clementino.holiday.model.HolidayType;
 import me.clementino.holiday.model.When;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 @Getter

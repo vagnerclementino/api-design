@@ -2,8 +2,14 @@ spring:
   cloud:
     function:
       definition: holidayFunction
+      scan:
+        enabled: true
+    function.web.export:
+      enabled: true
+  profiles:
+    active: local
   main:
-    web-application-type: none
+    web-application-type: servlet
   docker:
     compose:
       lifecycle-management: start-only
@@ -13,6 +19,9 @@ aws:
   region: us-east-1
   dynamodb:
     table-name: holidays
+
+server:
+  port: 8080
 error:
   handling:
     http-status-in-json-response: true
