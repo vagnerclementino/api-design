@@ -1,0 +1,18 @@
+services:
+  localstack:
+    image: localstack/localstack:3.4
+    container_name: localstack
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=dynamodb,apigateway,lambda
+      - DEFAULT_REGION=us-east-1
+      - LAMBDA_DOCKER_NETWORK=localstack_default
+      - LAMBDA_REMOTE_DOCKER=true
+      - LAMBDA_EXECUTOR=docker-reuse
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
