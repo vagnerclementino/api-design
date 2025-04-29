@@ -1,33 +1,49 @@
 include MakefileDocumentation
 
-.PHONY: build-artifact
-build-artifact: ##@helpers Build the artifact.
-	@mvn clean package -DskipTests -Dquarkus.profile=staging
+.PHONY: build
+build: ##@build Build the application
+	@mvn clean package
 
 .PHONY: run
-run: ##@application Run quarkus in dev mode.
-	@mvn clean compile quarkus:dev
-
-.PHONY: stop
-stop: ##@application Stop all containers.
-	docker compose down
-
-.PHONY: code-analysis
-lint: ##@quality Run maven code analysis
-	@mvn ktlint:check
+run: ##@run Run locally in development mode
+	@mvn spring-boot:run -Dspring-boot.run.profiles=local
 
 .PHONY: test
-test: ##@quality Run all tests
-	@mvn clean test -Dquarkus.profiles=test
+test: ##@test Run all tests
+	@mvn test
 
-.PHONY: smoke
-smoke: build-artifact ##@quality Run all tests
-	@sam local invoke --template sam.jvm.yaml --event src/test/resources/payloads/api-gateway/eventWithValidBody.json
+.PHONY: test-coverage
+test-coverage: ##@test Run tests with coverage report
+	@mvn test jacoco:report
 
-.PHONY: code-analysis
-code-analysis: ##@quality Run sonar linter
-	@mvn sonar:sonar -Dsonar.projectKey=com.hotmart.paymentintent:lambda-payment-intent-receiver -Dsonar.token=${SONAR_TOKEN} -Dsonar.host.url=https://sonarqube.devops.hotmart.com -DskipTests
+.PHONY: lint
+lint: ##@quality Run code style checks
+	@mvn checkstyle:check
 
-.PHONY: quality
-quality: test lint code-analysis smoke ##@quality Run all quality steps
+.PHONY: docker-build
+docker-build: ##@docker Build Docker image
+	@docker build -t api-holiday .
+
+.PHONY: docker-run
+docker-run: ##@docker Run in Docker container
+	@docker run -p 8080:8080 api-holiday
+
+.PHONY: lambda-local
+lambda-local: build ##@aws Test Lambda function locally
+	@test -f src/test/resources/lambda/payload.json || { echo "Creating default payload file"; mkdir -p src/test/resources/lambda && echo '{"body":"test"}' > src/test/resources/lambda/payload.json; }
+	@test -f target/sam.yaml || { echo "SAM template not found at target/sam.yaml"; exit 1; }
+	@chmod 644 target/api-holiday-0.0.1-SNAPSHOT-aws.jar
+	@sam local invoke --template target/sam.yaml --event src/test/resources/lambda/payload.json
+
+.PHONY: deploy
+deploy: build ##@aws Deploy to AWS Lambda
+	@sam deploy --guided
+
+.PHONY: clean
+clean: ##@clean Remove build artifacts
+	@mvn clean
+	@rm -rf target
+
+.PHONY: all
+all: clean build test ##@build Run full build pipeline
 
